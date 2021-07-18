@@ -6,7 +6,7 @@ import * as TaskListStories from './TaskList.stories'; //👈  Our stories impor
 //👇 composeStories will process all information related to the component (e.g., args)
 const { WithPinnedTasks } = composeStories(TaskListStories);
 
-it('renders pinned tasks at the start of the list', () => {
+xit('renders pinned tasks at the start of the list', () => {
   const { container } = render(<WithPinnedTasks />);
 
   expect(

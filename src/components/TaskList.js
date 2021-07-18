@@ -1,13 +1,17 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { archiveTask, pinTask } from '../lib/redux';
 
 import Task from './Task';
 
-export default function TaskList({ loading, tasks, onPinTask, onArchiveTask }) {
-  const events = {
-    onPinTask,
-    onArchiveTask,
-  };
+export default function TaskList({ loading }) {
+  const dispatch = useDispatch();
+
+  const tasks = useSelector((state) => state.tasks);
+
+  const onArchiveTask = (id) => dispatch(archiveTask(id));
+  const onPinTask = (id) => dispatch(pinTask(id));
 
   const LoadingRow = (
     <div className="loading-item">
@@ -46,10 +50,16 @@ export default function TaskList({ loading, tasks, onPinTask, onArchiveTask }) {
     ...tasks.filter((t) => t.state === 'TASK_PINNED'),
     ...tasks.filter((t) => t.state !== 'TASK_PINNED'),
   ];
+  
   return (
     <div className="list-items">
       {tasksInOrder.map((task) => (
-        <Task key={task.id} task={task} {...events} />
+        <Task
+          key={task.id}
+          task={task}
+          onArchiveTask={onArchiveTask}
+          onPinTask={onPinTask}
+        />
       ))}
     </div>
   );

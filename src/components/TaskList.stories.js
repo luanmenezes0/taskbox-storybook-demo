@@ -1,11 +1,19 @@
 import React from 'react';
 import * as TaskStories from './Task.stories';
 import TaskList from './TaskList';
+import { Provider } from 'react-redux';
+import store from '../lib/redux';
 
 export default {
   component: TaskList,
   title: 'TaskList',
-  decorators: [(story) => <div style={{ padding: '3rem' }}>{story()}</div>],
+  decorators: [
+    (story) => (
+      <Provider store={store}>
+        <div style={{ padding: '3rem' }}>{story()}</div>
+      </Provider>
+    ),
+  ],
 };
 
 const Template = (args) => <TaskList {...args} />;
